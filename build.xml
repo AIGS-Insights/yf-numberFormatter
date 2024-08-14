@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!-- yf connector build script -->
+<project name="yf-numberformatter" default="build">
+
+  <property name="yf.dir" value="C:\Software\Yellowfin\7.2.18-20180711" />
+  <property name="dist.dir" value="${basedir}/dist" />
+
+  <tstamp />
+
+  <target name="build">
+  
+    <echo message="Starting connector build" />
+
+    <property name="work.dir" value="${basedir}/work" />
+    <property name="jar.name" value="yf-numberformatter-${DSTAMP}.jar" />
+    <property name="connector.name" value="yf-numberformatter-${DSTAMP}.yfp" />
+
+    <delete dir="${work.dir}" />
+    <mkdir dir="${work.dir}/bin" />
+
+    <fileset id="core" dir="${yf.dir}/appserver/webapps/ROOT/WEB-INF/lib">
+      <include name="i4-core.jar" />
+      <include name="i4-mi.jar" />
+    </fileset>
+
+    <fileset id="dependencies" dir="${basedir}/lib">
+    </fileset>
+
+    <path id="compile-path">
+      <fileset refid="core" />
+      <fileset refid="dependencies" />
+    </path>
+
+    <javac source="1.8"
+      target="1.8"
+      srcdir="${basedir}/src"
+      destdir="${work.dir}/bin"
+      debug="on"
+      classpathref="compile-path"
+      fork="yes"
+      memorymaximumsize="512M"
+      nowarn="true" />
+   
+    <jar basedir="${work.dir}/bin" jarfile="${work.dir}/${jar.name}">
+      <manifest>
+        <attribute name="Implementation-Title" value="AiGS Number Formatter" />
+        <attribute name="Implementation-Vendor" value="AiGS" />
+        <attribute name="Implementation-Version" value="${DSTAMP}" />
+        <attribute name="Yellowfin-Library-Version" value="${DSTAMP}" />
+      </manifest>
+    </jar>
+
+    <mkdir dir="${dist.dir}" />
+    <delete file="${dist.dir}/${connector.name}" />
+
+    <zip destfile="${dist.dir}/${connector.name}">
+      <fileset dir="${work.dir}" includes="${jar.name}" />
+      <fileset refid="dependencies" />
+    </zip>
+
+    <echo message="Finished connector build" />
+
+  </target>
+
+</project>
+

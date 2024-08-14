@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "C:/Software/Yellowfin/7.2.18-20180711/appserver/webapps/ROOT/WEB-INF/lib/**/i4-core.jar",
+        "C:/Software/Yellowfin/7.2.18-20180711/appserver/webapps/ROOT/WEB-INF/lib/**/i4-mi.jar",
+        "lib/**/*.jar"
+    ]
+}
